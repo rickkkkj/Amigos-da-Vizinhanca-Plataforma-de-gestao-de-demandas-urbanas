@@ -34,7 +34,7 @@ export default function HomePage() {
         </div>
 
         <nav className="nav-buttons" aria-label="Navegação principal">
-          <Link className="nav-btn" to="/home">
+          <Link className="nav-btn nav-btn--active" to="/home">
             HOME
           </Link>
           <Link className="nav-btn" to="/perfil">
@@ -43,7 +43,7 @@ export default function HomePage() {
           <Link className="nav-btn" to="/minhas-ocorrencias">
             MINHAS OCORRÊNCIAS
           </Link>
-          <Link className="nav-btn nav-btn--danger" to="/">
+          <Link className="nav-btn nav-btn--danger" to="/Pagina-Login">
             SAIR
           </Link>
         </nav>

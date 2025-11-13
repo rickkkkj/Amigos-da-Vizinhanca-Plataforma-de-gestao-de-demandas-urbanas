@@ -1,0 +1,351 @@
+/* ===== Estrutura principal ===== */
+.container {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding: 1rem clamp(0.75rem, 3vw, 1.25rem);
+}
+
+/* ===== Header ===== */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo-svg {
+  width: 52px;
+  height: 52px;
+}
+
+.logo-section h1 {
+  margin: 0;
+  line-height: 1;
+  font-size: clamp(1.1rem, 1.2rem + 1vw, 1.6rem);
+  color: var(--text);
+}
+
+/* ===== Botões de navegação ===== */
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.9rem;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.3px;
+  background: color-mix(in oklab, var(--brand) 12%, transparent);
+  color: color-mix(in oklab, #000 28%, var(--text));
+  border: 1px solid color-mix(in oklab, var(--brand) 30%, transparent);
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    transform 0.06s ease,
+    filter 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.nav-btn:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+.nav-btn--active {
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  color: #08351a !important;
+  box-shadow: 0 6px 16px color-mix(in oklab, var(--brand) 35%, transparent);
+  border-color: transparent;
+}
+
+.nav-btn--danger {
+  background: color-mix(in oklab, #ef4444 18%, transparent);
+  border-color: color-mix(in oklab, #ef4444 35%, transparent);
+  color: color-mix(in oklab, #000 35%, var(--text));
+}
+
+/* ===== Seção principal ===== */
+.occurrences-section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: var(--shadow-sm);
+  margin-top: 1.25rem;
+}
+
+.section-title {
+  margin: 0 0 1rem;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--text);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ===== Lista de ocorrências ===== */
+.occurrences-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  max-height: 600px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+@media (max-width: 768px) {
+  .occurrences-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== Cartão de ocorrência ===== */
+.occurrence-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform 0.12s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+  cursor: pointer;
+  text-align: left;
+}
+
+.occurrence-card:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in oklab, var(--brand) 22%, transparent);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.occurrence-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}
+
+.occurrence-info h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.occurrence-info p {
+  margin: 0.15rem 0 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* ===== Badge de status ===== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  min-width: 96px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.badge-pending {
+  background: var(--status-pending-bg);
+  color: var(--status-pending-fg);
+  border-color: color-mix(in oklab, var(--status-pending-fg) 35%, transparent);
+}
+
+.badge-analysis {
+  background: var(--status-analysis-bg);
+  color: var(--status-analysis-fg);
+  border-color: color-mix(in oklab, var(--status-analysis-fg) 35%, transparent);
+}
+
+.badge-resolved {
+  background: var(--status-resolved-bg);
+  color: var(--status-resolved-fg);
+  border-color: color-mix(in oklab, var(--status-resolved-fg) 35%, transparent);
+}
+
+/* ===== Detalhes do cartão ===== */
+.occurrence-details {
+  display: flex;
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.details-text {
+  flex: 1;
+}
+
+.details-text h4 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin: 0.4rem 0 0.25rem;
+  color: var(--text);
+}
+
+.details-text p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 0.15rem 0;
+}
+
+.details-img {
+  width: 160px;
+  height: 120px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.details-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ===== Página de detalhes ===== */
+.details-page {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  padding: 1.5rem;
+  margin-top: 1.25rem;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.details-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 1rem;
+}
+
+.details-block h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+
+.details-field {
+  background: var(--card);
+  border-radius: 8px;
+  padding: 0.6rem;
+  font-size: 0.85rem;
+  color: var(--text);
+  margin-bottom: 0.4rem;
+}
+
+.details-right .details-img {
+  width: 100%;
+  height: 240px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.details-right .details-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* ===== Lista de urgência ===== */
+.urgency-list {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.urgency-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
+.urgency-circle {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  transition: 0.2s;
+}
+
+.urgency-circle.checked {
+  background: var(--brand);
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--brand) 30%, transparent);
+}
+
+/* ===== Botão padrão ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  border: none;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  transition:
+    transform 0.06s ease,
+    filter 0.2s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  color: #08351a;
+  box-shadow: 0 6px 16px color-mix(in oklab, var(--brand) 35%, transparent);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+/* ===== Responsividade ===== */
+@media (max-width: 900px) {
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .details-right .details-img {
+    height: 200px;
+  }
+}

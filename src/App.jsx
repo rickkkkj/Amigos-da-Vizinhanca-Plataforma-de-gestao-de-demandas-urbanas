@@ -26,6 +26,14 @@ export default function App() {
             <PaginaAdmin />
           </ProtectedRoute>
         }
+              />
+      <Route
+        path="/Pagina-Login"
+        element={
+          <ProtectedRoute>
+            <PaginaLogin />
+          </ProtectedRoute>
+        }
       />
       <Route
         path="/registro"

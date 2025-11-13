@@ -28,14 +28,10 @@ export default function RegistroPage() {
         </div>
 
         <div className="nav-buttons">
-          <Link to="/home" className="btn btn-primary">
-            HOME
-          </Link>
-          <button className="btn btn-primary">MEU PERFIL</button>
-          <button className="btn btn-primary">MINHAS OCORRÊNCIAS</button>
-          <Link to="/" className="btn btn-primary">
-            SAIR
-          </Link>
+          <Link to="/home" className="nav-btn"> HOME </Link>
+          <button className="nav-btn" to="/"> MEU PERFIL</button>
+          <Link className="nav-btn" to="/minhas-ocorrencias"> MINHAS OCORRÊNCIAS</Link>
+          <Link to="/Pagina-Login" className="nav-btn nav-btn--danger"> SAIR </Link>
         </div>
       </div>
 
