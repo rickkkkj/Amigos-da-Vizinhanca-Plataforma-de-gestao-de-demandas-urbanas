@@ -1,9 +1,32 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import "./registro.css";
 
 export default function RegistroPage() {
+  const [previewFoto, setPreviewFoto] = useState(null);
+  const [sucesso, setSucesso] = useState(false);
+  const navigate = useNavigate();
+
+  const handleFotoChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setPreviewFoto(URL.createObjectURL(file));
+    }
+  };
+
+  const cancelarFoto = () => {
+    setPreviewFoto(null);
+  };
+
+  const registrar = () => {
+    // Aqui você enviaria ao backend
+    setSucesso(true);
+  };
+
   return (
     <div className="container">
+
+      {/* HEADER */}
       <div className="header">
         <div className="logo-section">
           <div className="logo">
@@ -29,13 +52,16 @@ export default function RegistroPage() {
 
         <div className="nav-buttons">
           <Link to="/home" className="nav-btn"> HOME </Link>
-          <button className="nav-btn" to="/"> MEU PERFIL</button>
+          <button className="nav-btn"> MEU PERFIL</button>
           <Link className="nav-btn" to="/minhas-ocorrencias"> MINHAS OCORRÊNCIAS</Link>
           <Link to="/Pagina-Login" className="nav-btn nav-btn--danger"> SAIR </Link>
         </div>
       </div>
 
+      {/* CONTEÚDO */}
       <div className="main-content">
+
+        {/* FORM */}
         <div className="form-section">
           <div className="form-group">
             <h3>TÍTULO DA OCORRÊNCIA:</h3>
@@ -72,20 +98,39 @@ export default function RegistroPage() {
           </div>
         </div>
 
+        {/* FOTO E URGÊNCIA */}
         <div className="photo-section">
+
+          {/* FOTO */}
           <div className="photo-upload">
             <h3>FOTO</h3>
+
             <div className="photo-preview">
-              <img
-                src="https://images.unsplash.com/photo-1589895987857-689a7ea8cb14?w=800&h=450&fit=crop"
-                alt="Pré-visualização"
-              />
+              {previewFoto ? (
+                <img src={previewFoto} alt="Pré-visualização" />
+              ) : (
+                <div className="placeholder-text">Nenhuma foto selecionada</div>
+              )}
             </div>
-            <div style={{ marginTop: 12 }}>
-              <input type="file" accept="image/*" />
-            </div>
+
+            <label htmlFor="file-upload" className="upload-btn">Escolher Foto</label>
+            <input
+              id="file-upload"
+              type="file"
+              accept="image/*"
+              capture="environment"
+              onChange={handleFotoChange}
+              className="file-input-hidden"
+            />
+
+            {previewFoto && (
+              <button className="cancelar-foto-btn" onClick={cancelarFoto}>
+                Cancelar Foto
+              </button>
+            )}
           </div>
 
+          {/* URGÊNCIA */}
           <div className="urgency-section">
             <h3>NÍVEL DE URGÊNCIA</h3>
             <div className="urgency-options">
@@ -99,10 +144,34 @@ export default function RegistroPage() {
           </div>
         </div>
 
+        {/* BOTÕES */}
         <div className="submit-section">
-          <button className="submit-btn">Registrar Ocorrência</button>
+          <button className="submit-btn" onClick={registrar}>
+            Registrar Ocorrência
+          </button>
+
+          <Link to="/home" className="btn-voltar">
+            Voltar
+          </Link>
+
         </div>
       </div>
+
+      {/* MODAL SUCESSO */}
+      {sucesso && (
+        <div className="modal-overlay">
+          <div className="modal-box">
+            <h2>Ocorrência registrada com sucesso!</h2>
+            <button
+              className="modal-btn"
+              onClick={() => navigate("/home")}
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

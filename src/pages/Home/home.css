@@ -14,14 +14,17 @@
   padding: 0.75rem 0;
   border-bottom: 1px solid var(--border);
 }
+
 .logo-section {
   display: flex;
   align-items: center;
   gap: 0.75rem;
 }
+
 .logo svg {
   display: none;
 }
+
 .logo-img {
   width: 520px;
   height: 52px;
@@ -34,6 +37,7 @@
   align-items: center;
   gap: 0.5rem;
 }
+
 .nav-btn {
   display: inline-flex;
   align-items: center;
@@ -48,16 +52,14 @@
   border: 1px solid color-mix(in oklab, var(--brand) 30%, transparent);
   text-decoration: none;
   white-space: nowrap;
-  transition:
-    transform 0.06s ease,
-    filter 0.2s ease,
-    background 0.2s ease,
-    border-color 0.2s ease;
+  transition: transform 0.06s ease, filter 0.2s ease;
 }
+
 .nav-btn:hover {
   filter: brightness(1.05);
   transform: translateY(-1px);
 }
+
 .nav-btn--danger {
   background: color-mix(in oklab, #ef4444 18%, transparent);
   border-color: color-mix(in oklab, #ef4444 35%, transparent);
@@ -67,9 +69,7 @@
 /* Área principal: lista + filtro lateral */
 .main-content {
   display: grid;
-  grid-template-columns: 1fr 340px;
-  gap: 1.25rem;
-  margin-top: 1.25rem;
+  grid-template-columns: 2fr 0.8fr;
 }
 
 
@@ -81,6 +81,7 @@
   box-shadow: var(--shadow-sm);
 }
 
+/* Botão Registrar */
 .register-btn {
   display: inline-flex;
   align-items: center;
@@ -91,22 +92,22 @@
   font-weight: 800;
   border: 1px solid transparent;
   background: linear-gradient(135deg, var(--brand), var(--brand-2));
-  color: #08351a !important; /* força a cor contra regra global do <a> */
+  color: #08351a !important;
   text-decoration: none !important;
   box-shadow: 0 6px 20px color-mix(in oklab, var(--brand) 35%, transparent);
-  transition:
-    transform 0.06s ease,
-    box-shadow 0.2s ease,
-    filter 0.2s ease;
+  transition: transform 0.06s ease, box-shadow 0.2s ease, filter 0.2s ease;
   margin-bottom: 1rem;
 }
+
 .register-btn:hover {
   filter: brightness(1.02);
 }
+
 .register-btn:active {
   transform: translateY(1px);
 }
 
+/* Título da seção */
 .section-title {
   margin: 0 0 0.8rem;
   font-size: 1.1rem;
@@ -114,8 +115,17 @@
   color: var(--text);
 }
 
+/* ======== CARDS EM COLUNA (PEDIDO ATUALIZADO) ======== */
 .occurrences-list {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+/* Card */
+.occurrences-list {
+  display: flex;
+  flex-direction: column;
   gap: 0.7rem;
 }
 
@@ -128,15 +138,8 @@
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 10px;
-  transition:
-    transform 0.12s ease,
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
-}
-.occurrence-card:hover {
-  transform: translateY(-1px);
-  border-color: color-mix(in oklab, var(--brand) 22%, transparent);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  width: 100%;         
+  box-sizing: border-box;
 }
 
 .occurrence-info h3 {
@@ -144,13 +147,14 @@
   font-size: 1rem;
   color: var(--text);
 }
+
 .occurrence-info p {
   margin: 0;
   font-size: 0.9rem;
   color: var(--text-muted);
 }
 
-/* Badges: força nosso estilo mesmo se houver lib externa (Bootstrap, etc.) */
+/* Badges */
 .occurrences-section .badge {
   display: inline-flex;
   align-items: center;
@@ -162,24 +166,26 @@
   border: 1px solid transparent;
   white-space: nowrap;
 }
-.occurrences-section .badge-pending {
+
+.badge-pending {
   background: var(--status-pending-bg);
   color: var(--status-pending-fg);
   border-color: color-mix(in oklab, var(--status-pending-fg) 35%, transparent);
 }
-.occurrences-section .badge-analysis {
+
+.badge-analysis {
   background: var(--status-analysis-bg);
   color: var(--status-analysis-fg);
   border-color: color-mix(in oklab, var(--status-analysis-fg) 35%, transparent);
 }
-.occurrences-section .badge-resolved {
+
+.badge-resolved {
   background: var(--status-resolved-bg);
   color: var(--status-resolved-fg);
   border-color: color-mix(in oklab, var(--status-resolved-fg) 35%, transparent);
 }
 
 /* -------- Filtro lateral -------- */
-
 .filter-section {
   position: sticky;
   top: 0.75rem;
@@ -193,16 +199,19 @@
   min-height: fit-content;
   box-shadow: var(--shadow-sm);
 }
+
 .filter-section h3 {
   margin: 0 0 0.25rem;
   font-size: 1rem;
   letter-spacing: 0.3px;
   color: var(--text);
 }
+
 .filter-group {
   display: grid;
   gap: 0.45rem;
 }
+
 .filter-group label,
 .filter-group legend {
   font-size: 0.85rem;
@@ -223,12 +232,14 @@
   display: grid;
   gap: 0.5rem;
 }
+
 .checkbox-item {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   color: var(--text);
 }
+
 .checkbox-item input[type="checkbox"] {
   width: 16px;
   height: 16px;
@@ -241,20 +252,24 @@
     grid-template-columns: 1fr 320px;
   }
 }
+
 @media (max-width: 1024px) {
   .main-content {
     grid-template-columns: 1fr;
   }
+
   .filter-section {
     order: -1;
     position: relative;
     top: 0;
   }
 }
+
 @media (max-width: 520px) {
   .nav-buttons {
     gap: 0.35rem;
   }
+
   .nav-btn {
     padding: 0.45rem 0.75rem;
     font-size: 0.75rem;
