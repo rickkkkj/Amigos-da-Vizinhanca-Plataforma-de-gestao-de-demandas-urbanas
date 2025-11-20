@@ -30,7 +30,6 @@ export default function PaginaLogin() {
   return (
     <div className="login-page">
       <div className="login-card">
-        {/* Lado Esquerdo */}
         <aside className="left-hero">
           <div className="brand-chip">
             <span className="chip-icon"></span>
@@ -58,7 +57,6 @@ export default function PaginaLogin() {
           </div>
         </aside>
 
-        {/* Lado Direito */}
         <main className="right-form">
           <header className="form-header">
             <h2>Bem-vindo amigo do bairro!</h2>
@@ -89,7 +87,6 @@ export default function PaginaLogin() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                {/* Botão olho */}
                 <button
                   type="button"
                   className={`eye ${showPassword ? "eye--on" : "eye--off"}`}
@@ -126,7 +123,7 @@ export default function PaginaLogin() {
 
           <footer className="signup">
             <p>Crie sua conta gratuitamente</p>
-            <Link to="/registro" className="ghost">
+            <Link to="/cadastro" className="ghost">
               Criar minha conta
             </Link>
           </footer>

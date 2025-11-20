@@ -3,8 +3,10 @@ import PaginaLogin from "./pages/Login/PaginaLogin";
 import HomePage from "./pages/Home/HomePage";
 import PaginaAdmin from "./pages/Admin/PaginaAdm";
 import Registro from "./pages/Registro/PaginaRegistro";
+import Cadastro from "./pages/Cadastro/PaginaCadastro";
 import ProtectedRoute from "./components/ProtectedRoute";
 import MinhasOcorrencias from "./pages/MinhasOcorrencias/MinhasOcorrencias";
+import PaginaCadastro from "./pages/Cadastro/PaginaCadastro";
 //import './styles/style.css'
 
 export default function App() {
@@ -43,11 +45,19 @@ export default function App() {
           </ProtectedRoute>
         }
       />
-            <Route
+        <Route
         path="/minhas-ocorrencias"
         element={
           <ProtectedRoute>
             <MinhasOcorrencias />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/cadastro"
+        element={
+          <ProtectedRoute>
+            <PaginaCadastro />
           </ProtectedRoute>
         }
       />

@@ -34,7 +34,8 @@
 /* Card do login */
 .login-card {
   width: min(880px, 100% - 48px);
-  height: min(620px, calc(100svh - 48px));
+  min-height: 620px;
+  height: auto;
   border-radius: 20px;
   background:
     linear-gradient(0deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02)),
@@ -368,7 +369,8 @@
 
 @media (max-height: 800px) {
   .login-card {
-    height: min(560px, calc(100svh - 48px));
+    height: auto;
+    min-height: 0;
   }
   .left-hero {
     padding: 22px;
