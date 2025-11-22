@@ -1,12 +1,10 @@
-/* ===== Estrutura principal ===== */
-.container {
+.container-principal {
   max-width: 1200px;
   margin-inline: auto;
   padding: 1rem clamp(0.75rem, 3vw, 1.25rem);
 }
 
-/* ===== Header ===== */
-.header {
+.cabecalho-principal {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -15,32 +13,31 @@
   border-bottom: 1px solid var(--border);
 }
 
-.logo-section {
+.secao-logo {
   display: flex;
   align-items: center;
   gap: 0.75rem;
 }
 
-.logo-svg {
+.icone-logo {
   width: 52px;
   height: 52px;
 }
 
-.logo-section h1 {
+.secao-logo h1 {
   margin: 0;
   line-height: 1;
   font-size: clamp(1.1rem, 1.2rem + 1vw, 1.6rem);
   color: var(--text);
 }
 
-/* ===== Botões de navegação ===== */
-.nav-buttons {
+.botoes-de-navegacao {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.nav-btn {
+.botao-de-navegacao {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -61,26 +58,25 @@
     border-color 0.2s ease;
 }
 
-.nav-btn:hover {
+.botao-de-navegacao:hover {
   filter: brightness(1.05);
   transform: translateY(-1px);
 }
 
-.nav-btn--active {
+.botao-de-navegacao--ativo {
   background: linear-gradient(135deg, var(--brand), var(--brand-2));
   color: #08351a !important;
   box-shadow: 0 6px 16px color-mix(in oklab, var(--brand) 35%, transparent);
   border-color: transparent;
 }
 
-.nav-btn--danger {
+.botao-de-navegacao--perigo {
   background: color-mix(in oklab, #ef4444 18%, transparent);
   border-color: color-mix(in oklab, #ef4444 35%, transparent);
   color: color-mix(in oklab, #000 35%, var(--text));
 }
 
-/* ===== Seção principal ===== */
-.occurrences-section {
+.secao-de-ocorrencias {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -89,7 +85,7 @@
   margin-top: 1.25rem;
 }
 
-.section-title {
+.titulo-da-secao {
   margin: 0 0 1rem;
   font-size: 1.3rem;
   font-weight: 800;
@@ -99,8 +95,7 @@
   letter-spacing: 0.5px;
 }
 
-/* ===== Lista de ocorrências ===== */
-.occurrences-list {
+.lista-de-ocorrencias {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
@@ -110,13 +105,12 @@
 }
 
 @media (max-width: 768px) {
-  .occurrences-list {
+  .lista-de-ocorrencias {
     grid-template-columns: 1fr;
   }
 }
 
-/* ===== Cartão de ocorrência ===== */
-.occurrence-card {
+.cartao-de-ocorrencia {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -130,34 +124,33 @@
   text-align: left;
 }
 
-.occurrence-card:hover {
+.cartao-de-ocorrencia:hover {
   transform: translateY(-1px);
   border-color: color-mix(in oklab, var(--brand) 22%, transparent);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
 }
 
-.occurrence-top {
+.topo-da-ocorrencia {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 0.75rem;
 }
 
-.occurrence-info h3 {
+.informacoes-da-ocorrencia h3 {
   margin: 0;
   font-size: 1rem;
   font-weight: 700;
   color: var(--text);
 }
 
-.occurrence-info p {
+.informacoes-da-ocorrencia p {
   margin: 0.15rem 0 0;
   font-size: 0.85rem;
   color: var(--text-muted);
 }
 
-/* ===== Badge de status ===== */
-.badge {
+.selo-de-status {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -172,63 +165,61 @@
   text-transform: uppercase;
 }
 
-.badge-pending {
+.selo-pendente {
   background: var(--status-pending-bg);
   color: var(--status-pending-fg);
   border-color: color-mix(in oklab, var(--status-pending-fg) 35%, transparent);
 }
 
-.badge-analysis {
+.selo-em-analise {
   background: var(--status-analysis-bg);
   color: var(--status-analysis-fg);
   border-color: color-mix(in oklab, var(--status-analysis-fg) 35%, transparent);
 }
 
-.badge-resolved {
+.selo-resolvido {
   background: var(--status-resolved-bg);
   color: var(--status-resolved-fg);
   border-color: color-mix(in oklab, var(--status-resolved-fg) 35%, transparent);
 }
 
-/* ===== Detalhes do cartão ===== */
-.occurrence-details {
+.detalhes-da-ocorrencia {
   display: flex;
   gap: 1rem;
   align-items: stretch;
 }
 
-.details-text {
+.texto-dos-detalhes {
   flex: 1;
 }
 
-.details-text h4 {
+.texto-dos-detalhes h4 {
   font-size: 0.85rem;
   font-weight: 700;
   margin: 0.4rem 0 0.25rem;
   color: var(--text);
 }
 
-.details-text p {
+.texto-dos-detalhes p {
   font-size: 0.8rem;
   color: var(--text-muted);
   margin: 0.15rem 0;
 }
 
-.details-img {
+.imagem-dos-detalhes {
   width: 160px;
   height: 120px;
   border-radius: 10px;
   overflow: hidden;
 }
 
-.details-img img {
+.imagem-dos-detalhes img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-/* ===== Página de detalhes ===== */
-.details-page {
+.pagina-de-detalhes {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -237,13 +228,13 @@
   margin-top: 1.25rem;
 }
 
-.details-grid {
+.grade-de-detalhes {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.25rem;
 }
 
-.details-block {
+.bloco-de-detalhes {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -252,14 +243,14 @@
   margin-bottom: 1rem;
 }
 
-.details-block h3 {
+.bloco-de-detalhes h3 {
   font-size: 1rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
   color: var(--text);
 }
 
-.details-field {
+.campo-de-detalhe {
   background: var(--card);
   border-radius: 8px;
   padding: 0.6rem;
@@ -268,7 +259,7 @@
   margin-bottom: 0.4rem;
 }
 
-.details-right .details-img {
+.coluna-direita .imagem-dos-detalhes {
   width: 100%;
   height: 240px;
   border-radius: 12px;
@@ -276,20 +267,19 @@
   margin-bottom: 1rem;
 }
 
-.details-right .details-img img {
+.coluna-direita .imagem-dos-detalhes img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 12px;
 }
 
-/* ===== Lista de urgência ===== */
-.urgency-list {
+.lista-de-urgencia {
   display: grid;
   gap: 0.5rem;
 }
 
-.urgency-item {
+.item-de-urgencia {
   display: flex;
   align-items: center;
   gap: 0.6rem;
@@ -297,7 +287,7 @@
   color: var(--text);
 }
 
-.urgency-circle {
+.indicador-de-urgencia {
   width: 18px;
   height: 18px;
   border: 2px solid var(--border);
@@ -305,14 +295,13 @@
   transition: 0.2s;
 }
 
-.urgency-circle.checked {
+.indicador-de-urgencia.selecionado {
   background: var(--brand);
   border-color: var(--brand);
   box-shadow: 0 0 0 3px color-mix(in oklab, var(--brand) 30%, transparent);
 }
 
-/* ===== Botão padrão ===== */
-.btn {
+.botao {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -328,24 +317,23 @@
     filter 0.2s ease;
 }
 
-.btn-primary {
+.botao-primario {
   background: linear-gradient(135deg, var(--brand), var(--brand-2));
   color: #08351a;
   box-shadow: 0 6px 16px color-mix(in oklab, var(--brand) 35%, transparent);
 }
 
-.btn-primary:hover {
+.botao-primario:hover {
   transform: translateY(-1px);
   filter: brightness(1.05);
 }
 
-/* ===== Responsividade ===== */
 @media (max-width: 900px) {
-  .details-grid {
+  .grade-de-detalhes {
     grid-template-columns: 1fr;
   }
 
-  .details-right .details-img {
+  .coluna-direita .imagem-dos-detalhes {
     height: 200px;
   }
 }

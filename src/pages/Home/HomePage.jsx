@@ -12,7 +12,6 @@ export default function HomePage() {
     { t: "CALÇADA QUEBRADA", d: "08 DE ABRIL", s: "PENDENTE", bairro: "Centro", tipo: "Infraestrutura" },
   ];
 
-  // Estados dos filtros
   const [bairro, setBairro] = useState("TODOS");
   const [tipo, setTipo] = useState("TODOS");
   const [status, setStatus] = useState({
@@ -21,7 +20,6 @@ export default function HomePage() {
     resolvido: true
   });
 
-  // Função para aplicar filtros
   const ocorrenciasFiltradas = todasOcorrencias.filter((o) => {
     if (bairro !== "TODOS" && o.bairro !== bairro) return false;
     if (tipo !== "TODOS" && o.tipo !== tipo) return false;
@@ -34,49 +32,46 @@ export default function HomePage() {
   });
 
   const badgeClass = (s) =>
-    "badge " +
+    "status " +
     (s === "PENDENTE"
-      ? "badge-pending"
+      ? "status--pendente"
       : s === "RESOLVIDO"
-      ? "badge-resolved"
-      : "badge-analysis");
+      ? "status--resolvido"
+      : "status--analise");
 
   return (
-    <div className="container">
-      <header className="header">
-
-        <div className="logo-section">
-          <img src={Logo} alt="Amigos do Bairro" className="logo-img" />
-          <div className="logo-text">
+    <div className="pagina">
+      <header className="cabecalho">
+        <div className="cabecalho__logo">
+          <img src={Logo} alt="Amigos do Bairro" className="cabecalho__logo-imagem" />
+          <div className="cabecalho__logo-texto">
             <h1>AMIGOS DO <br /> BAIRRO</h1>
           </div>
         </div>
 
-        <nav className="nav-buttons">
-          <Link className="nav-btn nav-btn--active" to="/home"> HOME </Link>
-          <Link className="nav-btn" to="/perfil"> MEU PERFIL </Link>
-          <Link className="nav-btn" to="/minhas-ocorrencias"> MINHAS OCORRÊNCIAS </Link>
-          <Link className="nav-btn nav-btn--danger" to="/Pagina-Login"> SAIR </Link>
+        <nav className="cabecalho__navegacao">
+          <Link className="cabecalho__link cabecalho__link--ativo" to="/home"> HOME </Link>
+          <Link className="cabecalho__link" to="/perfil-usuario"> MEU PERFIL </Link>
+          <Link className="cabecalho__link" to="/minhas-ocorrencias"> MINHAS OCORRÊNCIAS </Link>
+          <Link className="cabecalho__link cabecalho__link--perigo" to="/Pagina-Login"> SAIR </Link>
         </nav>
       </header>
 
-      <main className="main-content">
-
-        {/* LISTA DE OCORRÊNCIAS */}
-        <section className="occurrences-section">
-          <Link to="/registro" className="register-btn">
+      <main className="conteudo">
+        <section className="ocorrencias">
+          <Link to="/registro" className="ocorrencias__registrar">
             REGISTRAR NOVA OCORRÊNCIA
           </Link>
 
-          <h2 className="section-title">OCORRÊNCIAS RECENTES</h2>
+          <h2 className="ocorrencias__titulo">OCORRÊNCIAS RECENTES</h2>
 
-          <div className="occurrences-list">
+          <div className="ocorrencias__lista">
             {ocorrenciasFiltradas.length === 0 ? (
-              <p className="nenhuma-ocorrencia">Nenhuma ocorrência encontrada.</p>
+              <p className="ocorrencias__vazio">Nenhuma ocorrência encontrada.</p>
             ) : (
               ocorrenciasFiltradas.map((o, i) => (
-                <article key={i} className="occurrence-card">
-                  <div className="occurrence-info">
+                <article key={i} className="ocorrencias__cartao">
+                  <div className="ocorrencias__info">
                     <h3>{o.t}</h3>
                     <p>{o.d}</p>
                   </div>
@@ -87,13 +82,12 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* FILTROS */}
-        <aside className="filter-section">
+        <aside className="filtros">
           <h3>FILTRAR</h3>
 
-          <div className="filter-group">
+          <div className="filtros__grupo">
             <label>BAIRRO</label>
-            <select className="filter-select" onChange={(e) => setBairro(e.target.value)}>
+            <select className="filtros__select" onChange={(e) => setBairro(e.target.value)}>
               <option>TODOS</option>
               <option>Centro</option>
               <option>Jardim América</option>
@@ -101,9 +95,9 @@ export default function HomePage() {
             </select>
           </div>
 
-          <div className="filter-group">
+          <div className="filtros__grupo">
             <label>TIPO</label>
-            <select className="filter-select" onChange={(e) => setTipo(e.target.value)}>
+            <select className="filtros__select" onChange={(e) => setTipo(e.target.value)}>
               <option>TODOS</option>
               <option>Infraestrutura</option>
               <option>Iluminação</option>
@@ -111,12 +105,11 @@ export default function HomePage() {
             </select>
           </div>
 
-          <fieldset className="filter-group">
+          <fieldset className="filtros__grupo">
             <legend>STATUS</legend>
 
-            <div className="checkbox-group">
-
-              <label className="checkbox-item">
+            <div className="filtros__checks">
+              <label className="filtros__check">
                 <input
                   type="checkbox"
                   checked={status.pendente}
@@ -127,7 +120,7 @@ export default function HomePage() {
                 PENDENTE
               </label>
 
-              <label className="checkbox-item">
+              <label className="filtros__check">
                 <input
                   type="checkbox"
                   checked={status.analise}
@@ -138,7 +131,7 @@ export default function HomePage() {
                 EM ANÁLISE
               </label>
 
-              <label className="checkbox-item">
+              <label className="filtros__check">
                 <input
                   type="checkbox"
                   checked={status.resolvido}
@@ -148,11 +141,9 @@ export default function HomePage() {
                 />
                 RESOLVIDO
               </label>
-
             </div>
           </fieldset>
         </aside>
-
       </main>
     </div>
   );

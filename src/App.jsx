@@ -7,6 +7,7 @@ import Cadastro from "./pages/Cadastro/PaginaCadastro";
 import ProtectedRoute from "./components/ProtectedRoute";
 import MinhasOcorrencias from "./pages/MinhasOcorrencias/MinhasOcorrencias";
 import PaginaCadastro from "./pages/Cadastro/PaginaCadastro";
+import PerfilUsuario from "./pages/PerfilUsuario/PerfilUsuario";
 //import './styles/style.css'
 
 export default function App() {
@@ -42,6 +43,14 @@ export default function App() {
         element={
           <ProtectedRoute>
             <Registro />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/perfil-usuario"
+        element={
+          <ProtectedRoute>
+            <PerfilUsuario />
           </ProtectedRoute>
         }
       />

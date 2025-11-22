@@ -1,0 +1,246 @@
+.perfil-page {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding: 1rem clamp(0.75rem, 3vw, 1.25rem);
+}
+
+/* ------------------- CABEÇALHO ------------------- */
+
+.perfil-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo-icon {
+  width: 52px;
+  height: 52px;
+}
+
+.header-left h1 {
+  margin: 0;
+  line-height: 1;
+  font-size: clamp(1.1rem, 1.2rem + 1vw, 1.6rem);
+  color: var(--text);
+}
+
+.cabecalho__navegacao {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.cabecalho__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.9rem;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.8rem;
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  background: color-mix(in oklab, var(--brand) 12%, transparent);
+  color: color-mix(in oklab, #000 28%, var(--text));
+  border: 1px solid color-mix(in oklab, var(--brand) 30%, transparent);
+  transition: transform 0.06s ease, filter 0.2s ease;
+}
+
+.cabecalho__link:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+.cabecalho__link--ativo {
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  color: #08351a !important;
+  border-color: transparent;
+  box-shadow: 0 6px 16px color-mix(in oklab, var(--brand) 40%, transparent);
+}
+
+.cabecalho__link--perigo {
+  background: color-mix(in oklab, #ef4444 18%, transparent);
+  border-color: color-mix(in oklab, #ef4444 35%, transparent);
+  color: color-mix(in oklab, #000 35%, var(--text));
+}
+
+/* ------------------- CONTEÚDO ------------------- */
+
+.perfil-container {
+  margin-top: 1.25rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.perfil-card {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.25rem;
+}
+
+/* -------- esquerda -------- */
+
+.perfil-left {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: var(--shadow-sm);
+}
+
+.perfil-user {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.perfil-avatar .material-icons {
+  font-size: 52px;
+  color: var(--brand);
+}
+
+.perfil-info {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.perfil-info label {
+  margin-top: 0.6rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.perfil-info input {
+  border: 1px solid var(--border);
+  background: var(--card);
+  padding: 0.55rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: var(--text);
+  outline: none;
+}
+
+.perfil-buttons {
+  margin-top: 1.25rem;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn-cancelar,
+.btn-salvar {
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  font-weight: 800;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-cancelar {
+  background: color-mix(in oklab, var(--brand) 12%, transparent);
+  border: 1px solid var(--border);
+}
+
+.btn-salvar {
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  color: #08351a;
+  box-shadow: 0 6px 16px color-mix(in oklab, var(--brand) 35%, transparent);
+}
+
+/* -------- direita -------- */
+
+.perfil-right {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: var(--shadow-sm);
+}
+
+.registros-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.registros-count span {
+  font-weight: bold;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  background: var(--card);
+}
+
+.registros-list {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.registro-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.status-badge {
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+}
+
+.status-badge.PENDENTE {
+  background: var(--status-pending-bg);
+  color: var(--status-pending-fg);
+}
+
+.status-badge.EM-ANÁLISE {
+  background: var(--status-analysis-bg);
+  color: var(--status-analysis-fg);
+}
+
+.status-badge.RESOLVIDO {
+  background: var(--status-resolved-bg);
+  color: var(--status-resolved-fg);
+}
+
+/* -------- botão sair -------- */
+
+.perfil-footer {
+  margin-top: 1.25rem;
+}
+
+.sair-btn {
+  background: none;
+  border: none;
+  font-weight: 800;
+  font-size: 1rem;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  cursor: pointer;
+  color: var(--text);
+}

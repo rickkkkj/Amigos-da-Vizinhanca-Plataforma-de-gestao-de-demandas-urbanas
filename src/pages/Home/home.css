@@ -1,12 +1,10 @@
-/* 1) Centraliza e limita a largura da página */
-.container {
+.pagina {
   max-width: 1700px;
   margin-inline: auto;
   padding: 1.5rem clamp(1rem, 4vw, 2rem);
 }
 
-/* Header */
-.header {
+.cabecalho {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -15,23 +13,18 @@
   border-bottom: 1px solid var(--border);
 }
 
-.logo-section {
+.cabecalho__logo {
   display: flex;
   align-items: center;
   gap: 0.75rem;
 }
 
-.logo svg {
-  display: none;
-}
-
-.logo-img {
+.cabecalho__logo-imagem {
   width: 52px;
   height: 52px;
-  display: block;
 }
 
-.logo-text h1 {
+.cabecalho__logo-texto h1 {
   margin: 0;
   font-size: 1.25rem;
   line-height: 1.1;
@@ -39,14 +32,13 @@
   color: var(--text);
 }
 
-/* Botões do header */
-.nav-buttons {
+.cabecalho__navegacao {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.nav-btn {
+.cabecalho__link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -63,7 +55,12 @@
   transition: transform 0.06s ease, filter 0.2s ease;
 }
 
-.nav-btn--active {
+.cabecalho__link:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+.cabecalho__link--ativo {
   background: linear-gradient(135deg, var(--brand), var(--brand-2));
   color: #052e16;
   border-color: color-mix(in oklab, var(--brand) 45%, transparent);
@@ -71,26 +68,20 @@
     0 6px 20px color-mix(in oklab, var(--brand) 35%, transparent);
 }
 
-.nav-btn:hover {
-  filter: brightness(1.05);
-  transform: translateY(-1px);
-}
-
-.nav-btn--danger {
+.cabecalho__link--perigo {
   background: color-mix(in oklab, #ef4444 18%, transparent);
   border-color: color-mix(in oklab, #ef4444 35%, transparent);
   color: color-mix(in oklab, #000 35%, var(--text));
 }
 
-/* Área principal: lista + filtro lateral */
-.main-content {
+.conteudo {
   display: grid;
   grid-template-columns: 2.3fr 1fr;
   gap: 1.75rem;
   margin-top: 1.75rem;
 }
 
-.occurrences-section {
+.ocorrencias {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -98,8 +89,7 @@
   box-shadow: var(--shadow-sm);
 }
 
-/* Botão Registrar */
-.register-btn {
+.ocorrencias__registrar {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -116,37 +106,24 @@
   margin-bottom: 1rem;
 }
 
-.register-btn:hover {
+.ocorrencias__registrar:hover {
   filter: brightness(1.02);
 }
 
-.register-btn:active {
-  transform: translateY(1px);
-}
-
-/* Título da seção */
-.section-title {
+.ocorrencias__titulo {
   margin: 0 0 1rem;
   font-size: 1.25rem;
   letter-spacing: 0.3px;
   color: var(--text);
 }
 
-/* ======== CARDS EM COLUNA (PEDIDO ATUALIZADO) ======== */
-.occurrences-list {
+.ocorrencias__lista {
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
 }
 
-/* Card */
-.occurrences-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.7rem;
-}
-
-.occurrence-card {
+.ocorrencias__cartao {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -155,24 +132,28 @@
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 10px;
-  width: 100%;         
+  width: 100%;
   box-sizing: border-box;
 }
 
-.occurrence-info h3 {
+.ocorrencias__info h3 {
   margin: 0 0 0.2rem;
   font-size: 1rem;
   color: var(--text);
 }
 
-.occurrence-info p {
+.ocorrencias__info p {
   margin: 0;
   font-size: 0.9rem;
   color: var(--text-muted);
 }
 
-/* Badges */
-.occurrences-section .badge {
+.ocorrencias__vazio {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.status {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
@@ -184,26 +165,25 @@
   white-space: nowrap;
 }
 
-.badge-pending {
+.status--pendente {
   background: var(--status-pending-bg);
   color: var(--status-pending-fg);
   border-color: color-mix(in oklab, var(--status-pending-fg) 35%, transparent);
 }
 
-.badge-analysis {
+.status--analise {
   background: var(--status-analysis-bg);
   color: var(--status-analysis-fg);
   border-color: color-mix(in oklab, var(--status-analysis-fg) 35%, transparent);
 }
 
-.badge-resolved {
+.status--resolvido {
   background: var(--status-resolved-bg);
   color: var(--status-resolved-fg);
   border-color: color-mix(in oklab, var(--status-resolved-fg) 35%, transparent);
 }
 
-/* -------- Filtro lateral -------- */
-.filter-section {
+.filtros {
   position: sticky;
   top: 0.75rem;
   align-self: start;
@@ -217,25 +197,12 @@
   box-shadow: var(--shadow-sm);
 }
 
-.filter-section h3 {
-  margin: 0 0 0.25rem;
-  font-size: 1rem;
-  letter-spacing: 0.3px;
-  color: var(--text);
-}
-
-.filter-group {
+.filtros__grupo {
   display: grid;
   gap: 0.45rem;
 }
 
-.filter-group label,
-.filter-group legend {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-}
-
-.filter-select {
+.filtros__select {
   width: 100%;
   padding: 0.6rem 0.7rem;
   border-radius: 10px;
@@ -244,38 +211,36 @@
   color: var(--text);
 }
 
-/* Checkboxes */
-.checkbox-group {
+.filtros__checks {
   display: grid;
   gap: 0.5rem;
 }
 
-.checkbox-item {
+.filtros__check {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   color: var(--text);
 }
 
-.checkbox-item input[type="checkbox"] {
+.filtros__check input[type="checkbox"] {
   width: 16px;
   height: 16px;
   accent-color: var(--brand);
 }
 
-/* -------- Responsividade -------- */
 @media (max-width: 1100px) {
-  .main-content {
+  .conteudo {
     grid-template-columns: 1fr 320px;
   }
 }
 
 @media (max-width: 1024px) {
-  .main-content {
+  .conteudo {
     grid-template-columns: 1fr;
   }
 
-  .filter-section {
+  .filtros {
     order: -1;
     position: relative;
     top: 0;
@@ -283,11 +248,11 @@
 }
 
 @media (max-width: 520px) {
-  .nav-buttons {
+  .cabecalho__navegacao {
     gap: 0.35rem;
   }
 
-  .nav-btn {
+  .cabecalho__link {
     padding: 0.45rem 0.75rem;
     font-size: 0.75rem;
   }
