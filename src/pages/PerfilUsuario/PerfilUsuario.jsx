@@ -13,7 +13,6 @@ export default function PerfilUsuario() {
   return (
     <div className="perfil-page">
 
-      {/* CABEÇALHO (igual da Home) */}
       <header className="perfil-header">
         <div className="header-left">
           <div className="logo-icon">
@@ -32,15 +31,12 @@ export default function PerfilUsuario() {
         </nav>
       </header>
 
-      {/* CONTAINER */}
       <main className="perfil-container">
         <div className="perfil-card">
 
-          {/* ESQUERDA */}
           <section className="perfil-left">
             <div className="perfil-user">
               <div className="perfil-avatar">
-                {/* Ícone SVG de usuário */}
                 <svg width="80" height="80" viewBox="0 0 24 24" fill="#22c55e" xmlns="http://www.w3.org/2000/svg">
                   <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/>
                 </svg>
@@ -73,11 +69,8 @@ export default function PerfilUsuario() {
               <button className="btn-salvar">Salvar alterações</button>
             </div>
           </section>
-
-          {/* DIREITA */}
           <section className="perfil-right">
             <div className="registros-header">
-              {/* Ícone SVG de nota/registro */}
               <svg width="26" height="26" fill="#22c55e" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style={{marginRight: '8px'}}>
                 <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 
                 7.04c.39-.39.39-1.02 0-1.41L18.37 
@@ -108,12 +101,12 @@ export default function PerfilUsuario() {
       </main>
 
       <footer className="perfil-footer">
-        <button className="sair-btn">
+         <Link to="/home" className="btn-sair">
           Sair
           <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24" style={{marginLeft: '6px'}} xmlns="http://www.w3.org/2000/svg">
             <path d="M16 13v-2H7V8l-5 4 5 4v-3zM20 3h-6v2h6v14h-6v2h6a2 2 0 002-2V5a2 2 0 00-2-2z"/>
           </svg>
-        </button>
+        </Link>
       </footer>
     </div>
   );

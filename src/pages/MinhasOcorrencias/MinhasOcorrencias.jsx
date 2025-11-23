@@ -93,7 +93,6 @@ export default function MinhasOcorrencias() {
     }
   };
 
-  // --- TELA DE DETALHES ---
   if (telaAtual === "detalhes" && ocorrenciaSelecionada) {
     return (
       <div className="container-principal">
@@ -134,7 +133,6 @@ export default function MinhasOcorrencias() {
           <h2 className="titulo-da-secao">Detalhes da Ocorrência</h2>
 
           <div className="grade-de-detalhes">
-            {/* Coluna Esquerda */}
             <div className="coluna-esquerda">
               <div className="bloco-de-detalhes">
                 <h3>Título da Ocorrência</h3>
@@ -155,7 +153,6 @@ export default function MinhasOcorrencias() {
               </div>
             </div>
 
-            {/* Coluna Direita */}
             <div className="coluna-direita">
               <div className="bloco-de-detalhes">
                 <h3>Foto</h3>
@@ -191,7 +188,6 @@ export default function MinhasOcorrencias() {
     );
   }
 
-  // --- TELA DE LISTA ---
   return (
     <div className="container-principal">
       <cabecalho-principal className="cabecalho-principal">
