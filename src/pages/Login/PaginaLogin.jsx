@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./login.css";
-import { loginMock } from "../../services/authMock";
+import { login } from "../../services/auth";  
 
 export default function PaginaLogin() {
   const [email, setEmail] = useState("");
@@ -16,12 +16,28 @@ export default function PaginaLogin() {
     e.preventDefault();
     setErro("");
     setLoading(true);
+
     try {
-      loginMock(email, password);
-      if (remember) localStorage.setItem("rememberedEmail", email);
+      const user = await login(email, password);
+
+      localStorage.setItem("user", JSON.stringify(user));
+
+      if (remember) {
+        localStorage.setItem("rememberedEmail", email);
+      } else {
+        localStorage.removeItem("rememberedEmail");
+      }
+
       navigate("/home");
+
     } catch (err) {
-      setErro(err.message || "Falha no login");
+      const msg =
+        err?.response?.data?.mensagem ||
+        err?.response?.data?.error ||
+        err?.message ||
+        "Falha no login";
+
+      setErro(msg);
     } finally {
       setLoading(false);
     }
@@ -30,6 +46,7 @@ export default function PaginaLogin() {
   return (
     <div className="login-page">
       <div className="login-card">
+        
         <aside className="left-hero">
           <div className="brand-chip">
             <span className="chip-icon"></span>
@@ -37,15 +54,8 @@ export default function PaginaLogin() {
           </div>
 
           <div className="hero-text">
-            <h1>
-              Transforme
-              <br />
-              sua cidade
-            </h1>
-            <p>
-              A plataforma que conecta cidadãos e resolve problemas urbanos de
-              forma colaborativa
-            </p>
+            <h1>Transforme<br />sua cidade</h1>
+            <p>A plataforma que conecta cidadãos e resolve problemas urbanos.</p>
           </div>
 
           <div className="hero-chart">
@@ -64,6 +74,8 @@ export default function PaginaLogin() {
           </header>
 
           <form onSubmit={onSubmit} className="form">
+
+            {/* EMAIL */}
             <div className="input-group">
               <label className="label">E-mail ou Usuário</label>
               <div className="field">
@@ -90,8 +102,7 @@ export default function PaginaLogin() {
                 <button
                   type="button"
                   className={`eye ${showPassword ? "eye--on" : "eye--off"}`}
-                  onClick={() => setShowPassword((v) => !v)}
-                  aria-label="Mostrar/ocultar senha"
+                  onClick={() => setShowPassword(v => !v)}
                 />
               </div>
             </div>
@@ -105,9 +116,7 @@ export default function PaginaLogin() {
                 />
                 Lembrar-me
               </label>
-              <a className="forgot" href="#">
-                Esqueci minha senha
-              </a>
+              <a className="forgot" href="#">Esqueci minha senha</a>
             </div>
 
             {erro && <p className="error">{erro}</p>}
@@ -117,9 +126,7 @@ export default function PaginaLogin() {
             </button>
           </form>
 
-          <div className="divider">
-            <span>Novo por aqui?</span>
-          </div>
+          <div className="divider"><span>Novo por aqui?</span></div>
 
           <footer className="signup">
             <p>Crie sua conta gratuitamente</p>
@@ -128,6 +135,7 @@ export default function PaginaLogin() {
             </Link>
           </footer>
         </main>
+
       </div>
     </div>
   );
