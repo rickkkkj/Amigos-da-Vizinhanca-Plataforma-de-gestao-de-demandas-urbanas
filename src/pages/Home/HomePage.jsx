@@ -27,7 +27,6 @@ export default function HomePage() {
     resolvido: true,
   });
 
-  // Usuário atual
   const usuario = getUser();
   const usuarioId = usuario?.id;
   const isAdmin = usuario?.perfil === "ADMIN";
@@ -70,9 +69,6 @@ export default function HomePage() {
     carregarTipos();
   }, []);
 
-  // ==========================================================
-  // 🔍 3) APLICAR FILTRO SOMENTE AO CLICAR NO BOTÃO
-  // ==========================================================
   const aplicarFiltros = () => {
     setTipo(filtrosPendentes.tipo);
     setStatus({
@@ -98,9 +94,6 @@ export default function HomePage() {
     });
   };
 
-  // ==========================================================
-  // 🔍 4) FILTRAR RESULTADOS
-  // ==========================================================
   const ocorrenciasFiltradas = ocorrencias.filter((o) => {
     if (tipo !== "TODOS" && o.tipo !== tipo) return false;
     if (!status.pendente && o.status === "PENDENTE") return false;
