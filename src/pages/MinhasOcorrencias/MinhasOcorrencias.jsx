@@ -1,74 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./minhasOcorrencias.css";
 import { Link } from "react-router-dom";
 
+import { listarPorUsuario } from "../../services/ocorrenciaService";
+import { getUserId } from "../../services/auth";
+
 export default function MinhasOcorrencias() {
   const [telaAtual, setTelaAtual] = useState("lista");
+  const [ocorrencias, setOcorrencias] = useState([]);
   const [ocorrenciaSelecionada, setOcorrenciaSelecionada] = useState(null);
 
-  const [ocorrencias] = useState([
-    {
-      id: 1,
-      titulo: "BURACO NA RUA",
-      data: "16 DE ABRIL",
-      status: "PENDENTE",
-      descricao:
-        "Buraco grande na via principal causando problemas no trânsito",
-      endereco: {
-        bairro: "Centro",
-        rua: "Rua Principal",
-        numero: "123",
-        complemento: "Próximo ao mercado",
-      },
-      urgencia: "CRÍTICA",
-      foto: "",
-    },
-    {
-      id: 2,
-      titulo: "FALTA DE ILUMINAÇÃO",
-      data: "16 DE ABRIL",
-      status: "PENDENTE",
-      descricao: "Poste de luz queimado deixando a rua escura",
-      endereco: {
-        bairro: "Jardim América",
-        rua: "Rua das Flores",
-        numero: "456",
-        complemento: "",
-      },
-      urgencia: "ALTA",
-      foto: "",
-    },
-    {
-      id: 3,
-      titulo: "LIXO ACUMULADO",
-      data: "16 DE ABRIL",
-      status: "EM ANÁLISE",
-      descricao: "Acúmulo de lixo na calçada há vários dias",
-      endereco: {
-        bairro: "Vila Nova",
-        rua: "Avenida Central",
-        numero: "789",
-        complemento: "Em frente à praça",
-      },
-      urgencia: "MÉDIA",
-      foto: "",
-    },
-    {
-      id: 4,
-      titulo: "CALÇADA QUEBRADA",
-      data: "16 DE ABRIL",
-      status: "RESOLVIDO",
-      descricao: "Calçada com buracos perigosos para pedestres",
-      endereco: {
-        bairro: "Centro",
-        rua: "Rua Comercial",
-        numero: "321",
-        complemento: "",
-      },
-      urgencia: "BAIXA",
-      foto: "",
-    },
-  ]);
+  const usuarioId = getUserId();
+
+  console.log("ID do usuário logado:", usuarioId);
+
+  useEffect(() => {
+    async function carregar() {
+      try {
+        const lista = await listarPorUsuario(usuarioId);
+
+        console.log("Ocorrências recebidas:", lista);
+
+        const formatado = lista.map((item) => ({
+          id: item.id,
+          titulo: item.titulo,
+          descricao: item.descricao,
+          endereco: item.endereco,
+          urgencia: item.urgencia,
+          status: item.status,
+          data: new Date(item.dataCriacao).toLocaleDateString("pt-BR"),
+          foto: item.foto ? `data:image/jpeg;base64,${item.foto}` : "",
+        }));
+
+        setOcorrencias(formatado);
+
+      } catch (e) {
+        console.error("Erro ao carregar ocorrências:", e);
+      }
+    }
+
+    if (usuarioId) carregar();
+  }, [usuarioId]);
 
   const handleOcorrenciaClick = (ocorrencia) => {
     setOcorrenciaSelecionada(ocorrencia);
@@ -84,6 +56,7 @@ export default function MinhasOcorrencias() {
     switch (status) {
       case "PENDENTE":
         return "selo-de-status selo-pendente";
+      case "EM_ANALISE":
       case "EM ANÁLISE":
         return "selo-de-status selo-em-analise";
       case "RESOLVIDO":
@@ -93,8 +66,9 @@ export default function MinhasOcorrencias() {
     }
   };
 
-  // --- TELA DE DETALHES ---
   if (telaAtual === "detalhes" && ocorrenciaSelecionada) {
+    const o = ocorrenciaSelecionada;
+
     return (
       <div className="container-principal">
         <cabecalho-principal className="cabecalho-principal">
@@ -114,116 +88,80 @@ export default function MinhasOcorrencias() {
             </h1>
           </div>
 
-          <nav className="botoes-de-navegacao" aria-label="Navegação principal">
-          <Link className="botao-de-navegacao" to="/home">
-            HOME
-          </Link>
-          <Link className="botao-de-navegacao" to="/perfil-usuario">
-            MEU PERFIL
-          </Link>
-          <Link className="botao-de-navegacao botao-de-navegacao--ativo" to="/minhas-ocorrencias">
-            MINHAS OCORRÊNCIAS
-          </Link>
-          <Link className="botao-de-navegacao botao-de-navegacao--perigo" to="/Pagina-Login">
-            SAIR
-          </Link>
-        </nav>
+          <nav className="botoes-de-navegacao">
+            <Link to="/home" className="botao-de-navegacao">HOME</Link>
+            <Link to="/perfil-usuario" className="botao-de-navegacao">MEU PERFIL</Link>
+            <Link to="/minhas-ocorrencias" className="botao-de-navegacao botao-de-navegacao--ativo">MINHAS OCORRÊNCIAS</Link>
+            <Link to="/Pagina-Login" className="botao-de-navegacao botao-de-navegacao--perigo">SAIR</Link>
+          </nav>
         </cabecalho-principal>
 
         <main className="pagina-de-detalhes">
           <h2 className="titulo-da-secao">Detalhes da Ocorrência</h2>
 
           <div className="grade-de-detalhes">
-            {/* Coluna Esquerda */}
             <div className="coluna-esquerda">
               <div className="bloco-de-detalhes">
                 <h3>Título da Ocorrência</h3>
-                <div className="campo-de-detalhe">{ocorrenciaSelecionada.titulo}</div>
+                <div className="campo-de-detalhe">{o.titulo}</div>
               </div>
 
               <div className="bloco-de-detalhes">
                 <h3>Descrição</h3>
-                <div className="campo-de-detalhe">{ocorrenciaSelecionada.descricao}</div>
+                <div className="campo-de-detalhe">{o.descricao}</div>
               </div>
 
               <div className="bloco-de-detalhes">
                 <h3>Endereço</h3>
-                <div className="campo-de-detalhe"><strong>Bairro:</strong> {ocorrenciaSelecionada.endereco.bairro}</div>
-                <div className="campo-de-detalhe"><strong>Rua:</strong> {ocorrenciaSelecionada.endereco.rua}</div>
-                <div className="campo-de-detalhe"><strong>Número:</strong> {ocorrenciaSelecionada.endereco.numero}</div>
-                <div className="campo-de-detalhe"><strong>Complemento:</strong> {ocorrenciaSelecionada.endereco.complemento || "-"}</div>
+                <div className="campo-de-detalhe"><strong>Bairro:</strong> {o.endereco.bairro}</div>
+                <div className="campo-de-detalhe"><strong>Rua:</strong> {o.endereco.rua}</div>
+                <div className="campo-de-detalhe"><strong>Número:</strong> {o.endereco.numero}</div>
+                <div className="campo-de-detalhe"><strong>Complemento:</strong> {o.endereco.complemento || "-"}</div>
               </div>
             </div>
 
-            {/* Coluna Direita */}
             <div className="coluna-direita">
               <div className="bloco-de-detalhes">
                 <h3>Foto</h3>
                 <div className="imagem-dos-detalhes">
-                  <img src={ocorrenciaSelecionada.foto} alt={ocorrenciaSelecionada.titulo} />
+                  {o.foto ? <img src={o.foto} alt={o.titulo} /> : <p>Sem foto</p>}
                 </div>
               </div>
 
               <div className="bloco-de-detalhes">
                 <h3>Nível de Urgência</h3>
-                <div className="lista-de-urgencia">
-                  {["CRÍTICA", "ALTA", "MÉDIA", "BAIXA"].map((nivel) => (
-                    <div key={nivel} className="item-de-urgencia">
-                      <div
-                        className={`indicador-de-urgencia ${
-                          ocorrenciaSelecionada.urgencia === nivel ? "selecionado" : ""
-                        }`}
-                      ></div>
-                      <span>{nivel}</span>
-                    </div>
-                  ))}
-                </div>
+                <p>{o.urgencia}</p>
               </div>
 
               <button className="botao botao-primario" onClick={handleVoltar}>
                 Voltar
               </button>
             </div>
-
           </div>
         </main>
       </div>
     );
   }
 
-  // --- TELA DE LISTA ---
   return (
     <div className="container-principal">
       <cabecalho-principal className="cabecalho-principal">
         <div className="secao-logo">
           <svg viewBox="0 0 24 24" fill="none" className="icone-logo">
-            <path
-              d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
-              fill="#4a8a5c"
-            />
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#4a8a5c" />
             <circle cx="12" cy="9" r="2.5" fill="white" />
             <circle cx="9" cy="11" r="1.2" fill="#4a8a5c" />
             <circle cx="15" cy="11" r="1.2" fill="#4a8a5c" />
             <circle cx="12" cy="13" r="1.2" fill="#4a8a5c" />
           </svg>
-          <h1>
-            AMIGOS DO <br /> BAIRRO
-          </h1>
+          <h1>AMIGOS DO <br /> BAIRRO</h1>
         </div>
 
-                  <nav className="botoes-de-navegacao" aria-label="Navegação principal">
-          <Link className="botao-de-navegacao" to="/home">
-            HOME
-          </Link>
-          <Link className="botao-de-navegacao" to="/perfil-usuario">
-            MEU PERFIL
-          </Link>
-          <Link className="botao-de-navegacao botao-de-navegacao--ativo" to="/minhas-ocorrencias">
-            MINHAS OCORRÊNCIAS
-          </Link>
-          <Link className="botao-de-navegacao botao-de-navegacao--perigo" to="/Pagina-Login">
-            SAIR
-          </Link>
+        <nav className="botoes-de-navegacao">
+          <Link to="/home" className="botao-de-navegacao">HOME</Link>
+          <Link to="/perfil-usuario" className="botao-de-navegacao">MEU PERFIL</Link>
+          <Link to="/minhas-ocorrencias" className="botao-de-navegacao botao-de-navegacao--ativo">MINHAS OCORRÊNCIAS</Link>
+          <Link to="/Pagina-Login" className="botao-de-navegacao botao-de-navegacao--perigo">SAIR</Link>
         </nav>
       </cabecalho-principal>
 
@@ -231,40 +169,38 @@ export default function MinhasOcorrencias() {
         <h2 className="titulo-da-secao">Minhas Ocorrências</h2>
 
         <div className="lista-de-ocorrencias">
-          {ocorrencias.map((ocorrencia) => (
-            <div
-              key={ocorrencia.id}
-              className="cartao-de-ocorrencia"
-              onClick={() => handleOcorrenciaClick(ocorrencia)}
-            >
-              <div className="topo-da-ocorrencia">
-                <div className="informacoes-da-ocorrencia">
-                  <h3>{ocorrencia.titulo}</h3>
-                  <p>{ocorrencia.data}</p>
-                </div>
-                <span className={getStatusClass(ocorrencia.status)}>
-                  {ocorrencia.status}
-                </span>
-              </div>
-
-              <div className="detalhes-da-ocorrencia">
-                <div className="texto-dos-detalhes">
-                  <h4>Endereço</h4>
-                  <p><strong>Bairro:</strong> {ocorrencia.endereco.bairro}</p>
-                  <p><strong>Rua:</strong> {ocorrencia.endereco.rua}</p>
-                  <p><strong>Número:</strong> {ocorrencia.endereco.numero}</p>
-                  <p><strong>Complemento:</strong> {ocorrencia.endereco.complemento || "-"}</p>
-
-                  <h4>Nível de Urgência</h4>
-                  <p>{ocorrencia.urgencia}</p>
+          {ocorrencias.length === 0 ? (
+            <p>Nenhuma ocorrência encontrada.</p>
+          ) : (
+            ocorrencias.map((o) => (
+              <div key={o.id} className="cartao-de-ocorrencia" onClick={() => handleOcorrenciaClick(o)}>
+                <div className="topo-da-ocorrencia">
+                  <div className="informacoes-da-ocorrencia">
+                    <h3>{o.titulo}</h3>
+                    <p>{o.data}</p>
+                  </div>
+                  <span className={getStatusClass(o.status)}>{o.status}</span>
                 </div>
 
-                <div className="imagem-dos-detalhes">
-                  <img src={ocorrencia.foto} alt={ocorrencia.titulo} />
-                </div>               
+                <div className="detalhes-da-ocorrencia">
+                  <div className="texto-dos-detalhes">
+                    <h4>Endereço</h4>
+                    <p><strong>Bairro:</strong> {o.endereco.bairro}</p>
+                    <p><strong>Rua:</strong> {o.endereco.rua}</p>
+                    <p><strong>Número:</strong> {o.endereco.numero}</p>
+                    <p><strong>Complemento:</strong> {o.endereco.complemento || "-"}</p>
+
+                    <h4>Nível de Urgência</h4>
+                    <p>{o.urgencia}</p>
+                  </div>
+
+                  <div className="imagem-dos-detalhes">
+                    {o.foto ? <img src={o.foto} alt={o.titulo} /> : <p>Sem foto</p>}
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </main>
     </div>

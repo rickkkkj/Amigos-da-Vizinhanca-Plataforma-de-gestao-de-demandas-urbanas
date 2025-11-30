@@ -1,32 +1,111 @@
 import { Link } from "react-router-dom";
 import "../Home/home.css";
 import Logo from "../../assets/logo/logo_inversed.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import { listarTodas, listarPorUsuario } from "../../services/ocorrenciaService";
+import { listarTipos } from "../../services/tipoService";
+import { getUser } from "../../services/auth";
 
 export default function HomePage() {
-  const todasOcorrencias = [
-    { t: "BURACO NA RUA", d: "16 DE ABRIL", s: "PENDENTE", bairro: "Centro", tipo: "Infraestrutura" },
-    { t: "FALTA DE ILUMINAÇÃO", d: "14 DE ABRIL", s: "EM ANÁLISE", bairro: "Jardim América", tipo: "Iluminação" },
-    { t: "LIXO ACUMULADO", d: "12 DE ABRIL", s: "RESOLVIDO", bairro: "Vila Nova", tipo: "Limpeza" },
-    { t: "POSTE CAÍDO", d: "10 DE ABRIL", s: "EM ANÁLISE", bairro: "Centro", tipo: "Iluminação" },
-    { t: "CALÇADA QUEBRADA", d: "08 DE ABRIL", s: "PENDENTE", bairro: "Centro", tipo: "Infraestrutura" },
-  ];
 
-  const [bairro, setBairro] = useState("TODOS");
+  const [ocorrencias, setOcorrencias] = useState([]);
+
+  const [tipos, setTipos] = useState([]);
+
   const [tipo, setTipo] = useState("TODOS");
   const [status, setStatus] = useState({
     pendente: true,
     analise: true,
-    resolvido: true
+    resolvido: true,
   });
 
-  const ocorrenciasFiltradas = todasOcorrencias.filter((o) => {
-    if (bairro !== "TODOS" && o.bairro !== bairro) return false;
-    if (tipo !== "TODOS" && o.tipo !== tipo) return false;
+  const [filtrosPendentes, setFiltrosPendentes] = useState({
+    tipo: "TODOS",
+    pendente: true,
+    analise: true,
+    resolvido: true,
+  });
 
-    if (!status.pendente && o.s === "PENDENTE") return false;
-    if (!status.analise && o.s === "EM ANÁLISE") return false;
-    if (!status.resolvido && o.s === "RESOLVIDO") return false;
+  // Usuário atual
+  const usuario = getUser();
+  const usuarioId = usuario?.id;
+  const isAdmin = usuario?.perfil === "ADMIN";
+
+  useEffect(() => {
+    async function carregarOcorrencias() {
+      try {
+        const lista = isAdmin
+          ? await listarTodas()
+          : await listarPorUsuario(usuarioId);
+
+        const formatado = lista.map((o) => ({
+          id: o.id,
+          titulo: o.titulo,
+          data: new Date(o.dataCriacao).toLocaleDateString("pt-BR"),
+          status: o.status,
+          tipo: o.tipoNome,
+        }));
+
+        setOcorrencias(formatado);
+
+      } catch (e) {
+        console.error("Erro ao carregar ocorrências:", e);
+      }
+    }
+
+    carregarOcorrencias();
+  }, [usuarioId, isAdmin]);
+
+  useEffect(() => {
+    async function carregarTipos() {
+      try {
+        const lista = await listarTipos();
+        setTipos(lista);
+      } catch (e) {
+        console.error("Erro ao carregar tipos:", e);
+      }
+    }
+
+    carregarTipos();
+  }, []);
+
+  // ==========================================================
+  // 🔍 3) APLICAR FILTRO SOMENTE AO CLICAR NO BOTÃO
+  // ==========================================================
+  const aplicarFiltros = () => {
+    setTipo(filtrosPendentes.tipo);
+    setStatus({
+      pendente: filtrosPendentes.pendente,
+      analise: filtrosPendentes.analise,
+      resolvido: filtrosPendentes.resolvido,
+    });
+  };
+
+  const limparFiltros = () => {
+    setFiltrosPendentes({
+      tipo: "TODOS",
+      pendente: true,
+      analise: true,
+      resolvido: true,
+    });
+
+    setTipo("TODOS");
+    setStatus({
+      pendente: true,
+      analise: true,
+      resolvido: true,
+    });
+  };
+
+  // ==========================================================
+  // 🔍 4) FILTRAR RESULTADOS
+  // ==========================================================
+  const ocorrenciasFiltradas = ocorrencias.filter((o) => {
+    if (tipo !== "TODOS" && o.tipo !== tipo) return false;
+    if (!status.pendente && o.status === "PENDENTE") return false;
+    if (!status.analise && o.status === "EM_ANALISE") return false;
+    if (!status.resolvido && o.status === "RESOLVIDO") return false;
 
     return true;
   });
@@ -35,12 +114,13 @@ export default function HomePage() {
     "status " +
     (s === "PENDENTE"
       ? "status--pendente"
-      : s === "RESOLVIDO"
+      : s === "RESOLVIDA"
       ? "status--resolvido"
       : "status--analise");
 
   return (
     <div className="pagina">
+
       <header className="cabecalho">
         <div className="cabecalho__logo">
           <img src={Logo} alt="Amigos do Bairro" className="cabecalho__logo-imagem" />
@@ -58,24 +138,27 @@ export default function HomePage() {
       </header>
 
       <main className="conteudo">
+
         <section className="ocorrencias">
           <Link to="/registro" className="ocorrencias__registrar">
             REGISTRAR NOVA OCORRÊNCIA
           </Link>
 
-          <h2 className="ocorrencias__titulo">OCORRÊNCIAS RECENTES</h2>
+          <h2 className="ocorrencias__titulo">
+            {isAdmin ? "TODAS AS OCORRÊNCIAS" : "OCORRÊNCIAS RECENTES"}
+          </h2>
 
           <div className="ocorrencias__lista">
             {ocorrenciasFiltradas.length === 0 ? (
               <p className="ocorrencias__vazio">Nenhuma ocorrência encontrada.</p>
             ) : (
-              ocorrenciasFiltradas.map((o, i) => (
-                <article key={i} className="ocorrencias__cartao">
+              ocorrenciasFiltradas.map((o) => (
+                <article key={o.id} className="ocorrencias__cartao">
                   <div className="ocorrencias__info">
-                    <h3>{o.t}</h3>
-                    <p>{o.d}</p>
+                    <h3>{o.titulo}</h3>
+                    <p>{o.data}</p>
                   </div>
-                  <span className={badgeClass(o.s)}>{o.s}</span>
+                  <span className={badgeClass(o.status)}>{o.status}</span>
                 </article>
               ))
             )}
@@ -86,22 +169,21 @@ export default function HomePage() {
           <h3>FILTRAR</h3>
 
           <div className="filtros__grupo">
-            <label>BAIRRO</label>
-            <select className="filtros__select" onChange={(e) => setBairro(e.target.value)}>
-              <option>TODOS</option>
-              <option>Centro</option>
-              <option>Jardim América</option>
-              <option>Vila Nova</option>
-            </select>
-          </div>
-
-          <div className="filtros__grupo">
             <label>TIPO</label>
-            <select className="filtros__select" onChange={(e) => setTipo(e.target.value)}>
-              <option>TODOS</option>
-              <option>Infraestrutura</option>
-              <option>Iluminação</option>
-              <option>Limpeza</option>
+            <select
+              className="filtros__select"
+              value={filtrosPendentes.tipo}
+              onChange={(e) =>
+                setFiltrosPendentes((prev) => ({ ...prev, tipo: e.target.value }))
+              }
+            >
+              <option value="TODOS">TODOS</option>
+
+              {tipos.map((t) => (
+                <option key={t.id} value={t.nome}>
+                  {t.nome}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -109,12 +191,16 @@ export default function HomePage() {
             <legend>STATUS</legend>
 
             <div className="filtros__checks">
+
               <label className="filtros__check">
                 <input
                   type="checkbox"
-                  checked={status.pendente}
+                  checked={filtrosPendentes.pendente}
                   onChange={() =>
-                    setStatus({ ...status, pendente: !status.pendente })
+                    setFiltrosPendentes((prev) => ({
+                      ...prev,
+                      pendente: !prev.pendente,
+                    }))
                   }
                 />
                 PENDENTE
@@ -123,9 +209,12 @@ export default function HomePage() {
               <label className="filtros__check">
                 <input
                   type="checkbox"
-                  checked={status.analise}
+                  checked={filtrosPendentes.analise}
                   onChange={() =>
-                    setStatus({ ...status, analise: !status.analise })
+                    setFiltrosPendentes((prev) => ({
+                      ...prev,
+                      analise: !prev.analise,
+                    }))
                   }
                 />
                 EM ANÁLISE
@@ -134,16 +223,30 @@ export default function HomePage() {
               <label className="filtros__check">
                 <input
                   type="checkbox"
-                  checked={status.resolvido}
+                  checked={filtrosPendentes.resolvido}
                   onChange={() =>
-                    setStatus({ ...status, resolvido: !status.resolvido })
+                    setFiltrosPendentes((prev) => ({
+                      ...prev,
+                      resolvido: !prev.resolvido,
+                    }))
                   }
                 />
                 RESOLVIDO
               </label>
+
             </div>
           </fieldset>
+
+          <button className="botao-filtrar" onClick={aplicarFiltros}>
+            FILTRAR
+          </button>
+
+          <button className="botao-limpar" onClick={limparFiltros}>
+            LIMPAR FILTROS
+          </button>
+
         </aside>
+
       </main>
     </div>
   );

@@ -4,7 +4,6 @@
   padding: 1rem clamp(0.75rem, 3vw, 1.25rem);
 }
 
-/* ------------------- CABEÇALHO ------------------- */
 
 .perfil-header {
   display: flex;
@@ -72,7 +71,6 @@
   color: color-mix(in oklab, #000 35%, var(--text));
 }
 
-/* ------------------- CONTEÚDO ------------------- */
 
 .perfil-container {
   margin-top: 1.25rem;
@@ -89,7 +87,6 @@
   gap: 1.25rem;
 }
 
-/* -------- esquerda -------- */
 
 .perfil-left {
   background: var(--surface);
@@ -152,8 +149,9 @@
 }
 
 .btn-cancelar {
-  background: color-mix(in oklab, var(--brand) 12%, transparent);
-  border: 1px solid var(--border);
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  color: #08351a;
+  box-shadow: 0 6px 16px color-mix(in oklab, var(--brand) 35%, transparent);
 }
 
 .btn-salvar {
@@ -161,8 +159,6 @@
   color: #08351a;
   box-shadow: 0 6px 16px color-mix(in oklab, var(--brand) 35%, transparent);
 }
-
-/* -------- direita -------- */
 
 .perfil-right {
   background: var(--surface);
@@ -227,20 +223,20 @@
   color: var(--status-resolved-fg);
 }
 
-/* -------- botão sair -------- */
-
-.perfil-footer {
-  margin-top: 1.25rem;
-}
-
-.sair-btn {
-  background: none;
+.btn-sair {
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  color: #08351a;
+  box-shadow: 0 6px 16px color-mix(in oklab, var(--brand) 35%, transparent);
   border: none;
-  font-weight: 800;
-  font-size: 1rem;
-  display: flex;
-  gap: 6px;
-  align-items: center;
+  padding: 10px 20px;
+  border-radius: 5px;
   cursor: pointer;
-  color: var(--text);
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;    
+  gap: 6px;                   
 }
